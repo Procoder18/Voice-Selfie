@@ -22,5 +22,27 @@ Webcam.set({
 })
 
 function speak(){
+    var synth = window.speechSynthesis;
+    var acoustic_data="taking your selfie in 5 seconds";
+    var utterance=new SpeechSynthesisUtterance(acoustic_data);
+    synth.speak(utterance);
     Webcam.attach(camera);
+    setTimeout(function(){
+        takeselfie(),
+        save()
+    },5000)
+}
+
+function takeselfie(){
+    Webcam.snap(function(img){
+        document.getElementById("result").innerHTML='<img id="selfie" src="'+img+'">'
+    })
+
+}
+
+function save(){
+    var di=document.getElementById("download_img");
+    var selfie_img=document.getElementById("selfie").src;
+    di.href=selfie_img;
+    di.click();
 }
